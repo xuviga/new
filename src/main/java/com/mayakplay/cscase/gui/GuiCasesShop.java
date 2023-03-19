@@ -102,6 +102,7 @@ public class GuiCasesShop extends MPGui
         for (int i = 0; i < PacketsDecoder.getCases().size(); ++i) {
             final String t = PacketsDecoder.getCases().get(i).getTexture();
             this.addTex("case" + i, t);
+            this.addTex("prise" + i, t);
         }
     }
 }

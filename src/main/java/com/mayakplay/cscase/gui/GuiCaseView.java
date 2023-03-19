@@ -99,9 +99,11 @@ public class GuiCaseView extends MPGui
                     this.randStop = PacketsDecoder.randInt(12, 21);
                     this.isClicked = false;
                 }
-                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.casePrice, 160.0f);
-                int price = PacketsDecoder.getCases().get(this.casePrice).getPrice(); // получаем стоимость кейса по его ID
+                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.caseid, 160.0f);
+                int price = PacketsDecoder.getCases().get(this.caseid).getPrice();
+                System.out.println("caseid: " + this.caseid + ", price: " + price);
                 this.drawScaledString(Strings.openPrice(price), (float)(guiX + 128), (float)(guiY + 42), 0.92f, TextPosition.CENTER);
+
             }
             else {
                 this.draw3DCase(guiX + 101, guiY + 13, "case" + this.caseid, this.caseLoadingRotation);
