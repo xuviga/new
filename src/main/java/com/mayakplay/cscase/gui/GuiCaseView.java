@@ -43,9 +43,10 @@ public class GuiCaseView extends MPGui
     private int current;
     private int lastInt;
     private int itemsCount;
+    private int casePrice;
     private ItemStack itemStack;
     private int quality;
-    
+
     public GuiCaseView(final int caseid) {
         this.rollMove = 0.0f;
         this.counter = 0;
@@ -66,7 +67,6 @@ public class GuiCaseView extends MPGui
         this.lastInt = 0;
         this.caseid = caseid;
     }
-    
     @Override
     public void drawScreen(final int x, final int y, final float ticks) {
         super.drawScreen(x, y, ticks);
@@ -99,13 +99,8 @@ public class GuiCaseView extends MPGui
                     this.randStop = PacketsDecoder.randInt(12, 21);
                     this.isClicked = false;
                 }
-                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.caseid, 160.0f);
-                int price = 1000;
-                for (int i = 0; i < PacketsDecoder.getCases().size(); ++i) {
-                    if (i == this.caseid) {
-                        price = PacketsDecoder.getCases().get(i).getPrice();
-                    }
-                }
+                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.casePrice, 160.0f);
+                int price = PacketsDecoder.getCases().get(this.casePrice).getPrice(); // получаем стоимость кейса по его ID
                 this.drawScaledString(Strings.openPrice(price), (float)(guiX + 128), (float)(guiY + 42), 0.92f, TextPosition.CENTER);
             }
             else {
