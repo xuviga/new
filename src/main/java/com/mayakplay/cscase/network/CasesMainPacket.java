@@ -46,7 +46,8 @@ public class CasesMainPacket implements IMessage
             }
             final String[] args = message.text.split(",");
             if (args[0].equals("Viev")) {
-                Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new GuiCaseView(Integer.parseInt(args[1])));
+                int casePrice = 0;
+                Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new GuiCaseView(Integer.parseInt(args[1]), casePrice));
             }
             if (args[0].equals("SetWon")) {
                 Recieve.WON_ITEM = args[1] + "," + args[2] + "," + args[3] + "," + args[4];

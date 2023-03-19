@@ -1,7 +1,6 @@
 package com.mayakplay.cscase.gui;
 import net.minecraftforge.fml.relauncher.*;
 import com.mayakplay.cscase.model.*;
-import java.util.*;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import com.mayakplay.cscase.network.*;
@@ -47,7 +46,8 @@ public class GuiCaseView extends MPGui
     private ItemStack itemStack;
     private int quality;
 
-    public GuiCaseView(final int caseid) {
+    public GuiCaseView(final int caseid, int casePrice) {
+        this.casePrice = casePrice;
         this.rollMove = 0.0f;
         this.counter = 0;
         this.gridAnim = 0.0f;
