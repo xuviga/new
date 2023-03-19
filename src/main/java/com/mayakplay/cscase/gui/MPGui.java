@@ -1,208 +1,205 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.gui;
 
-import com.google.common.collect.Maps;
-import com.mayakplay.cscase.Refs;
-import com.mayakplay.cscase.model.ModelItemCase;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSound;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.ImageBufferDownload;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.ThreadDownloadImageData;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GLContext;
-import sun.security.util.SecurityConstants;
+import net.minecraft.client.gui.*;
+import net.minecraftforge.fml.relauncher.*;
+import java.util.*;
+import java.awt.image.*;
+import com.mayakplay.cscase.model.*;
+import net.minecraft.client.renderer.texture.*;
+import org.lwjgl.opengl.*;
+import java.io.*;
+import net.minecraft.client.*;
+import net.minecraft.item.*;
+import net.minecraft.entity.item.*;
+import net.minecraft.world.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.*;
+import java.net.*;
+import javax.imageio.*;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Map;
-
-/**
- * Created by ���������� on 06.01.2016.
- */
-public class MPGui extends GuiScreen {
-
-    ModelItemCase modelItemCase = new ModelItemCase();
-    float delta = 0;
-    final double tc = 60D;
-    long lastTime = System.nanoTime();
-    private int MX = 0;
-    private int MY = 0;
-
-    protected void drawScaledString(String text, float x, float y, float scale, TextPosition textPosition) {
-
-        GL11.glPushMatrix();
-        GL11.glTranslatef(x, y, 0.0F);
-        GL11.glScalef(scale, scale, 0.0F);
-
+@SideOnly(Side.CLIENT)
+public class MPGui extends GuiScreen
+{
+    private static final HashMap<String, BufferedImage> images;
+    final double tc = 60.0;
+    protected boolean isClicked;
+    ModelItemCase modelItemCase;
+    float delta;
+    long lastTime;
+    private int MX;
+    private int MY;
+    private boolean mouse;
+    
+    public MPGui() {
+        this.isClicked = false;
+        this.modelItemCase = new ModelItemCase();
+        this.delta = 0.0f;
+        this.lastTime = System.nanoTime();
+        this.MX = 0;
+        this.MY = 0;
+        this.mouse = false;
+    }
+    
+    public static void bindTexture(final String name) {
+        if (MPGui.images.get(name) != null) {
+            GlStateManager.bindTexture(new DynamicTexture((BufferedImage)MPGui.images.get(name)).getGlTextureId());
+        }
+    }
+    
+    protected void drawScaledString(final String text, final float x, final float y, final float scale, final TextPosition textPosition) {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(x, y, 0.0f);
+        GlStateManager.scale(scale, scale, 0.0f);
         if (textPosition == TextPosition.CENTER) {
-            drawCenteredString(mc.fontRenderer, text, 0, 0, 0xFFFFFF);
-        } else if (textPosition == TextPosition.LEFT) {
-            drawString(mc.fontRenderer, text, 0, 0, 0xFFFFFF);
-        } else if (textPosition == TextPosition.RIGHT) {
-            drawString(mc.fontRenderer, text, -fontRendererObj.getStringWidth(text), 0, 0xFFFFFF);
+            this.drawCenteredString(this.mc.fontRenderer, text, 0, 0, 16777215);
         }
-        GL11.glPopMatrix();
+        else if (textPosition == TextPosition.LEFT) {
+            this.drawString(this.mc.fontRenderer, text, 0, 0, 16777215);
+        }
+        else if (textPosition == TextPosition.RIGHT) {
+            this.drawString(this.mc.fontRenderer, text, -this.fontRenderer.getStringWidth(text), 0, 16777215);
+        }
+        GlStateManager.popMatrix();
     }
-
-    enum TextPosition {
-        LEFT, CENTER, RIGHT
-    }
-
-    /**
-     * Метод для отрисовки изображения с ЛЮБЫМ размером текстуры;
-     * posX, posY - позиция width, height - размер
-     */
-    protected void drawCompleteImage(int posX, int posY, int width, int height) {
-        GL11.glPushMatrix();
-
-        GL11.glTranslatef(posX, posY, 0.0F);
+    
+    protected void drawCompleteImage(final int posX, final int posY, final int width, final int height) {
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float)posX, (float)posY, 0.0f);
         GL11.glBegin(7);
-
-        GL11.glTexCoord2f(0.0F, 0.0F);
-        GL11.glVertex3f(0.0F, 0.0F, 0.0F);
-        GL11.glTexCoord2f(0.0F, 1.0F);
-        GL11.glVertex3f(0.0F, height, 0.0F);
-        GL11.glTexCoord2f(1.0F, 1.0F);
-        GL11.glVertex3f(width, height, 0.0F);
-        GL11.glTexCoord2f(1.0F, 0.0F);
-        GL11.glVertex3f(width, 0.0F, 0.0F);
-        GL11.glEnd();
-
-        GL11.glPopMatrix();
+        GlStateManager.glTexCoord2f(0.0f, 0.0f);
+        GlStateManager.glVertex3f(0.0f, 0.0f, 0.0f);
+        GlStateManager.glTexCoord2f(0.0f, 1.0f);
+        GlStateManager.glVertex3f(0.0f, (float)height, 0.0f);
+        GlStateManager.glTexCoord2f(1.0f, 1.0f);
+        GlStateManager.glVertex3f((float)width, (float)height, 0.0f);
+        GlStateManager.glTexCoord2f(1.0f, 0.0f);
+        GlStateManager.glVertex3f((float)width, 0.0f, 0.0f);
+        GlStateManager.glEnd();
+        GlStateManager.popMatrix();
     }
-
-    public boolean isHover(int xx, int yy, int xx1, int yy1) {
-        int mouseX = MX;
-        int mouseY = MY;
-        if (mouseX >= xx && mouseX < xx1+xx && mouseY >= yy && mouseY < yy1+yy) {
-            return true;
-        } else {
-            return false;
-        }
+    
+    public boolean isHover(final int xx, final int yy, final int xx1, final int yy1) {
+        final int mouseX = this.MX;
+        final int mouseY = this.MY;
+        return mouseX >= xx && mouseX < xx1 + xx && mouseY >= yy && mouseY < yy1 + yy;
     }
-
-    public boolean isClicked(int xx, int yy, int xx1, int yy1) {
-        int mouseX = MX;
-        int mouseY = MY;
-        if (mouseX >= xx && mouseX < xx1+xx && mouseY >= yy && mouseY < yy1+yy && isClicked) {
-            return true;
-        } else {
-            return false;
-        }
+    
+    public boolean isClicked(final int xx, final int yy, final int xx1, final int yy1) {
+        final int mouseX = this.MX;
+        final int mouseY = this.MY;
+        return mouseX >= xx && mouseX < xx1 + xx && mouseY >= yy && mouseY < yy1 + yy && this.isClicked;
     }
-
-    protected void draw3DCase(int x, int y, String texture, float rotation) {
-        GL11.glPushMatrix();
+    
+    protected void draw3DCase(final int x, final int y, final String texture, final float rotation) {
+        GlStateManager.pushMatrix();
         bindTexture(texture);
-        GL11.glTranslatef(x + 27, y - 12,44);
-        GL11.glScalef(20,20,20);
-        GL11.glRotatef(-8, 1, 0, 0);
-        //160
-        GL11.glRotatef(rotation, 0, 1, 0);
-        GL11.glDisable(GL11.GL_CULL_FACE);
-        modelItemCase.renderModel(0.0625F);
-        GL11.glPopMatrix();
+        GlStateManager.translate((float)(x + 27), (float)(y - 12), 44.0f);
+        GlStateManager.scale(20.0f, 20.0f, 20.0f);
+        GlStateManager.rotate(-8.0f, 1.0f, 0.0f, 0.0f);
+        GlStateManager.rotate(rotation, 0.0f, 1.0f, 0.0f);
+        GL11.glDisable(2884);
+        this.modelItemCase.renderModel(0.0625f);
+        GlStateManager.popMatrix();
     }
-
-    protected boolean isClicked = false;
-    class Timing extends Thread {
-
-        private int timer;
-
-        public Timing(int timer) {
-            this.timer = timer;
-        }
-
-        public void run() {
-            try {
-                Thread.sleep(timer);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            isClicked = false;
-            stop();
-        }
-    }
-
-    @Override
-    protected void mouseClicked(int x, int y, int b) {
+    
+    protected void mouseClicked(final int x, final int y, final int b) throws IOException {
         super.mouseClicked(x, y, b);
-
-        isClicked = true;
-        Timing timing = new Timing(100); timing.start();
+        this.isClicked = true;
+        final Timing timing = new Timing(100);
+        timing.start();
     }
-
-    @Override
-    public void drawScreen(int x, int y, float ticks) {
-        MX = x;
-        MY = y;
-        double ns = 1000000000 / tc;
-        long now = System.nanoTime();
-        delta = (float) ((now - lastTime) / ns);
-        lastTime = now;
+    
+    public void drawScreen(final int x, final int y, final float ticks) {
+        if (!this.mouse) {
+            Minecraft.getMinecraft().mouseHelper.ungrabMouseCursor();
+            this.mouse = true;
+        }
+        this.MX = x;
+        this.MY = y;
+        final double ns = 1.6666666666666666E7;
+        final long now = System.nanoTime();
+        this.delta = (float)((now - this.lastTime) / ns);
+        this.lastTime = now;
     }
-
-    protected void draw3DGuiItem(ItemStack itemStack, float x, float y, float scale) {
-        ItemStack is = itemStack.copy();
-        is.stackSize = 1;
+    
+    protected void draw3DGuiItem(final ItemStack itemStack, final float x, final float y, final float scale) {
+        final ItemStack is = itemStack.copy();
+        is.setCount(1);
         itemStack.setItemDamage(itemStack.getItemDamage());
-        EntityItem entityItem = new EntityItem(mc.theWorld, 0D, 0D, 0D, is);
-        entityItem.hoverStart = 0;
-        GL11.glPushMatrix();
-
-
+        final EntityItem entityItem = new EntityItem((World)this.mc.world, 0.0, 0.0, 0.0, is);
+        entityItem.hoverStart = 0.0f;
+        GlStateManager.pushMatrix();
         RenderHelper.enableGUIStandardItemLighting();
-        GL11.glTranslatef(x,y,4);
-        GL11.glRotatef(-11, 1, 0, 0);
-        GL11.glRotatef(160, 0, 1, 0);
-        GL11.glRotatef(180, 1, 0, 0);
-        GL11.glScalef(scale,scale,scale);
-
-
-        RenderManager.instance.func_147939_a(entityItem, 0, 0, 0, 0.2F, 0.2F, false);
-
-
+        GlStateManager.translate(x, y, 4.0f);
+        GlStateManager.rotate(-11.0f, 1.0f, 0.0f, 0.0f);
+        GlStateManager.rotate(160.0f, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(180.0f, 1.0f, 0.0f, 0.0f);
+        GlStateManager.scale(scale, scale, scale);
+        Minecraft.getMinecraft().getRenderManager().renderEntity((Entity)entityItem, 0.0, 0.0, 0.0, 0.2f, 0.2f, false);
         RenderHelper.disableStandardItemLighting();
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
-
-
-    @Override
+    
     public boolean doesGuiPauseGame() {
         return false;
     }
-
-    protected void playSound(String name) {
-    	mc.thePlayer.playSound(Refs.MOD_ID + ":" + name, 1.0F, 1.0F);
+    
+    protected void playSound(final String name) {
+        this.mc.player.playSound(new SoundEvent(new ResourceLocation("teccs:" + name)), 1.0f, 1.0f);
     }
-
-    private static Map<String, DynamicTexture> images = Maps.newHashMap();
-
-    public static void bindTexture(String name){
-        if (images.get(name) != null)
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, images.get(name).getGlTextureId());
-    }
-
-    public void addTex(String name, String image){
+    
+    public void addTex(final String name, final String image) {
         try {
-            images.put(name, new DynamicTexture(ImageIO.read(new URL(image))));
-        } catch (IOException e) {
+            final BufferedImage image2 = ImageIO.read(new URL(image));
+            MPGui.images.put(name, image2);
+        }
+        catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    public void initGui() {
+        super.initGui();
+    }
+    
+    protected void mouseReleased(final int mouseX, final int mouseY, final int state) {
+        super.mouseReleased(mouseX, mouseY, state);
+    }
+    
+    static {
+        images = new HashMap<String, BufferedImage>();
+    }
+    
+    enum TextPosition
+    {
+        LEFT, 
+        CENTER, 
+        RIGHT;
+    }
+    
+    class Timing extends Thread
+    {
+        private final int timer;
+        
+        public Timing(final int timer) {
+            this.timer = timer;
+        }
+        
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(this.timer);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MPGui.this.isClicked = false;
+            this.stop();
         }
     }
 }

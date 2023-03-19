@@ -1,435 +1,355 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.gui;
 
-import com.mayakplay.cscase.ColorHelper;
-import com.mayakplay.cscase.Refs;
-import com.mayakplay.cscase.Strings;
-import com.mayakplay.cscase.model.ModelGuiCase;
-import com.mayakplay.cscase.network.PacketsDecoder;
-import com.mayakplay.cscase.network.Recieve;
-import com.mayakplay.cscase.pojo.CaseItem;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import javax.jws.soap.SOAPBinding;
-import java.awt.*;
+import net.minecraftforge.fml.relauncher.*;
+import com.mayakplay.cscase.model.*;
 import java.util.*;
+import net.minecraft.item.*;
+import net.minecraft.util.*;
+import com.mayakplay.cscase.network.*;
+import com.mayakplay.cscase.pojo.*;
+import org.lwjgl.opengl.*;
+import com.mayakplay.cscase.*;
+import java.awt.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.entity.item.*;
+import net.minecraft.world.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.*;
+import net.minecraft.entity.*;
+import com.mojang.realmsclient.gui.*;
 
-/**
- * Created by Константин on 07.01.2016.
- */
-public class GuiCaseView extends MPGui {
-
-    private int caseid;
-    private boolean isWon = false;
-    float rollMove = 0;
-    private java.util.List<CaseItem> ROLLING_ITEMS = null;//= PacketsDecoder.getRandomItemsForRoll();
-
-    public GuiCaseView(int caseid) {
-        this.caseid = caseid;
-    }
-
-    private boolean isCaseLoading = false;
-    private float caseLoadingRotation = 160;
-    @Override
-    public void drawScreen(int x, int y, float ticks) {
-        super.drawScreen(x, y, ticks);
-        drawDefaultBackground();
-
-        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int factor = scaled.getScaleFactor();
-
-        int guiX = width / 2 - 255 / 2;
-        int guiY = height / 2 - 226 / 2;
-
-        //drawScaledString((x - guiX) + "|" + (y - guiY), 2, 2, 1, TextPosition.LEFT); //==============
-
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureCW.png"));
-        drawTexturedModalRect(guiX, guiY, 0, 0, 256, 72);
-        GL11.glColor4f(1,1,1, 0.6F);
-        drawTexturedModalRect(guiX, guiY, 0, 0, 256, 255);
-        GL11.glDisable(GL11.GL_BLEND);
-        GL11.glPopMatrix();
-
-        drawScaledString(Strings.itemsCanDrop, guiX + 12, guiY + 63, 0.85F, TextPosition.LEFT); //==============
-
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-        if (!Recieve.isRolling) {
-
-            if (!isCaseLoading) {
-                if (!isHover(guiX + 65, guiY + 39, 125, 14))
-                    drawTexturedModalRect(guiX + 65, guiY + 39, 0, 214, 125, 14);
-                else
-                    drawTexturedModalRect(guiX + 65, guiY + 39, 0, 228, 125, 14);
-                if (isClicked(guiX + 65, guiY + 39, 125, 14)) {
-                    //isRolling = true;
-                    isCaseLoading = true;
-                    mc.thePlayer.sendChatMessage("/rollcase " + caseid);
-                    randStop = PacketsDecoder.randInt(12, 21);
-                    isClicked = false;
-                }
-
-
-                draw3DCase(guiX + 101, guiY + 13, "case" + caseid, 160);
-
-
-                int price = 1000;
-                for (int i = 0; i < PacketsDecoder.getCases().size(); i++) {
-                    if (i == caseid) price = PacketsDecoder.getCases().get(i).getPrice();
-                }
-
-                drawScaledString(Strings.openPrice(price), guiX + 128, guiY + 42, 0.92F, TextPosition.CENTER); //==============
-            } else {
-                draw3DCase(guiX + 101, guiY + 13, "case" + caseid, caseLoadingRotation);
-                caseLoadingRotation += delta * 2;
-                mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-                drawTexturedModalRect(guiX + 65, guiY + 39, 0, 242, 125, 14);
-                drawScaledString(Strings.opening, guiX + 81, guiY + 42, 0.92F, TextPosition.LEFT); //==============
-            }
-        } else {
-            if (ROLLING_ITEMS == null)
-                ROLLING_ITEMS = PacketsDecoder.getRandomItemsForRoll();
-
-            mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-            drawTexturedModalRect(guiX + 65, guiY + 39, 0, 242, 125, 14);
-            drawScaledString(Strings.opening, guiX + 81, guiY + 42, 0.92F, TextPosition.LEFT); //==============
-            drawRollingItems();
-        }
-
-        drawItemsGrid(x, y, guiX + 8, guiY + 73);
-
-        if (isWon) {
-            GL11.glPushMatrix();
-            GL11.glTranslatef(0,0,400);
-            drawWonScreen(x,y,ticks);
-            GL11.glPopMatrix();
-        }
-    }
-
-    private float littleWaiting = 0;
-    //38 42
-    private float slow = PacketsDecoder.randFloat(9.38F, 9.42F);// 9.42F; //((float) PacketsDecoder.getRandomItemsForRoll().size()) * (8.512F / 50F);
-    private int randStop = 0;
-    private boolean isRolling = false;
-
-    private boolean useful1 = true;
-    private int current = 0;
-    private int lastInt = 0;
-
-    @Override
-    public void onGuiClosed() {
-        Recieve.isRolling = false;
-    }
-
-    private void drawRollingItems() {
-        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int factor = scaled.getScaleFactor();
-
-        int guiX = width / 2 - 255 / 2;
-        int guiY = height / 2 - 226 / 2;
-
-        //rollMove = 0;
-
-
-
-        // Рисовка кейсов
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor((guiX + 66) * factor, height * factor - (guiY + 7) * factor - 30 * factor, 123 * factor, 30 * factor);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-
-        for (int i = 0; i < ROLLING_ITEMS.size(); i++) {
-            Color cl = ColorHelper.getColorByRare(ROLLING_ITEMS.get(i).getRarity());
-            GL11.glPushMatrix();
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-            GL11.glTranslatef(guiX + rollMove + 66.0F + 40.0F * i, guiY + 8, 0);
-            drawTexturedModalRect(0, 0, 127, 0, 38, 20);
-            //playSound("rolling");
-            int poop = (int) (guiX + rollMove + 66.0F + 40.0F * i);
-            int contact = guiX + 127;
-
-            if (contact >= poop && contact < 40+poop)
-                current = i;
-
-            //if ((float) Math.abs(poop) > (float) contact && (float) Math.abs(poop) < (float) contact - 10) {
-            //	current = i;
-            //}
-            
-            
-            if (lastInt != current) {
-            	playSound("rolling");
-            }
-            
-            lastInt = current;
-            
-            
-
-                //playSound("rolling");
-
-            //System.out.println((float)((int)( Math.abs(guiX + rollMove + 66.0F + 40.0F * i))) + 0.001F +" | "+ (float) (guiX + 127) + 0.001F);
-
-            GL11.glColor4f(cl.getRed() / 255F, cl.getGreen()/ 255F, cl.getBlue() / 255F, 1F);
-            drawTexturedModalRect(0, 20, 127, 20, 38, 8);
-
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glColor3f(1,1,1);
-            GL11.glPopMatrix();
-
-            ItemStack is = ROLLING_ITEMS.get(i).getItemStack();
-
-            draw3DGuiItem(is, (int) guiX + rollMove + 85.0F + 40.0F * i, guiY + 26, 30F);
-
-            GL11.glColor3f(1,1,1);
-            if (is.getDisplayName().length() > 12)
-                drawScaledString(is.getDisplayName().substring(0, 11)+"...", guiX + rollMove + 67 + 40.0F * i, guiY + 29, 0.48F, TextPosition.LEFT); else
-                drawScaledString(is.getDisplayName(), guiX + rollMove + 67 + 40.0F * i, guiY + 29, 0.48F, TextPosition.LEFT);
-
-            mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-        }
-
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glTranslatef(0,0,400);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-        drawTexturedModalRect(guiX + 102, guiY + 7, 165, 0, 51, 30);
-        GL11.glPopMatrix();
-
-        //rollMove = -1000;
-        //rollMove =  -((ROLLING_ITEMS.size()-4) * 40); // -5 | -15
-        if (rollMove >= -((ROLLING_ITEMS.size()-4) * 40) + randStop) {
-            rollMove = rollMove - delta * slow;
-            if (slow >= 0.05F)
-            slow -= delta / 50;
-        } else if (littleWaiting < 6) {
-            littleWaiting += delta * slow;
-        } else {
-            this.itemStack = ROLLING_ITEMS.get(57).getItemStack().copy();//PacketsDecoder.getRandomItemsForRoll().get(57).getItemStack();
-            this.itemsCount = this.itemStack.stackSize;
-            this.quality = ROLLING_ITEMS.get(57).getRarity();
-            isWon = true;
-            //mc.displayGuiScreen(new GuiCaseWon(new ItemStack(PacketsDecoder.getRandomItemsForRoll().get(57).getItem()), PacketsDecoder.getRandomItemsForRoll().get(57).getRarity()));
-        }
-
-        //rollMove = - 1000;
-
-        //drawScaledString(rollMove + "|" + ((-((ROLLING_ITEMS.size()-5) * 40) + randStop) + 10), 2, 2, 1, TextPosition.LEFT);
-
-        //else if (littleWaiting < 10) {
-        //    littleWaiting += delta * slow;
-        //}
-        //else
-        //    mc.displayGuiScreen(new GuiCaseWon(new ItemStack(Items.bed), 1));
-
-    }
-
-    //range
-    //opacity 0.1F - 1.0F
-    //scale 0.1 - 45F
-    int counter = 0;
-    float gridAnim = 0;
-    private void drawItemsGrid(int mouseX, int mouseY, int x, int y) {
-        //drawScaledString((mouseX - x) + "|" + (mouseY - y), 2, 12, 1, TextPosition.LEFT);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-        for (int i = 0; i < 3; i ++) {
-            for (int j = 0; j < 5; j++) {
-                if (counter < (int) gridAnim) {
-
-                    mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-                    drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i, 82, 0, 45, 33);
-                    Color cl = ColorHelper.getColorByRare(PacketsDecoder.getCaseItemsList().get(counter).getRarity());
-
-                    GL11.glPushMatrix();
-                    GL11.glEnable(GL11.GL_BLEND);
-                    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-                    drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i + 33, 82, 33, 45, 12);
-
-                    GL11.glColor4f(cl.getRed() / 255F, cl.getGreen()/ 255F, cl.getBlue() / 255F, 0.9F);
-
-                    drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i + 33, 82, 33, 45, 12);
-                    GL11.glDisable(GL11.GL_BLEND);
-                    GL11.glColor3f(1,1,1);
-                    GL11.glPopMatrix();
-
-
-                    ItemStack is = PacketsDecoder.getCaseItemsList().get(counter).getItemStack();
-                    draw3DGuiItem(is, x + 25  + 47 * j, y + 29 + 48 * i, 38F);
-
-                    String name = is.getDisplayName();
-                    if (PacketsDecoder.getCaseItemsList().get(counter).getRarity() == 5) {
-                        name = "\u2726 " + name + " \u2726";
-                    }
-
-                    if (name.length() > 14) {
-                        drawScaledString(name.substring(0, 13) + "-", x + 5 + 47 * j, y + 36 + 48 * i, 0.5F, TextPosition.LEFT);
-                        if (name.length() > 27)
-                            drawScaledString(name.substring(13,26)+"...", x + 5 + 47 * j, y + 41 + 48 * i, 0.5F, TextPosition.LEFT); else
-                            drawScaledString(name.substring(13), x + 5 + 47 * j, y + 41 + 48 * i, 0.5F, TextPosition.LEFT);
-                    } else {
-                        drawScaledString(name, x + 5 + 47 * j, y + 38 + 48 * i, 0.5F, TextPosition.LEFT);
-                    }
-
-                    counter++;
-
-                }
-            }
-        }
-
-        if (gridAnim < PacketsDecoder.getCaseItemsList().size()) {
-            gridAnim += delta / 2;
-        }
-
-        if (gridAnim > PacketsDecoder.getCaseItemsList().size()) {
-            gridAnim = PacketsDecoder.getCaseItemsList().size();
-        }
-        counter = 0;
-    }
-
-    //////////////////////////////// WON!!!!!!!////////////////////////////////////
-    float animation = 0;
-    float mainAnimation = 25;
-    float fenceAnim = 0;
-
-    float numAnim = 0;
-
-    ModelGuiCase model = new ModelGuiCase();
-    RenderItem renderItem = new RenderItem();
-
+@SideOnly(Side.CLIENT)
+public class GuiCaseView extends MPGui
+{
+    float rollMove;
+    int counter;
+    float gridAnim;
+    float animation;
+    float mainAnimation;
+    float fenceAnim;
+    float numAnim;
+    ModelGuiCase model;
+    private final int caseid;
+    private boolean isWon;
+    private List<CaseItem> ROLLING_ITEMS;
+    private boolean isCaseLoading;
+    private float caseLoadingRotation;
+    private float littleWaiting;
+    private float slow;
+    private int randStop;
+    private final boolean isRolling = false;
+    private final boolean useful1 = true;
+    private int current;
+    private int lastInt;
     private int itemsCount;
     private ItemStack itemStack;
     private int quality;
-    private void drawWonScreen(int x, int y, float ticks) {
-        drawDefaultBackground();
-
-        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int factor = scaled.getScaleFactor();
-        int panX = 205;
-        int panY = 105;
-
-        int guiX = width / 2 - panX / 2;
-        int guiY = height / 2 - panY / 2;
-
-        Color color = ColorHelper.getColorByRare(quality);
-
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTexture.png"));
-        drawTexturedModalRect(guiX - 7, guiY -16 ,0 ,0 ,219, 146);
-
-        GL11.glColor4f(color.getRed() / 255F,color.getGreen() / 255F,color.getBlue() / 255F, 0.7F);
-        drawTexturedModalRect(guiX - 7, guiY -16 ,0 ,0 ,219, 16);
-
-        GL11.glColor3f(1,1,1);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTextureU.png"));
-        //drawTexturedModalRect(guiX - 7, guiY -16 ,0 ,0 ,219, 1);
-
-        GL11.glPopMatrix();
-
-        drawCenteredString(fontRendererObj, itemStack.getDisplayName() , width / 2, guiY - 12, 0xFFFFFF);
-
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTexture.png"));
-        if (fenceAnim == - 0.9F) {
-            if (!isHover(guiX - 7 + 67, guiY - 16 + 124, 85, 17))
-                drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 146, 85, 17);
-            else
-                drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 164, 85, 17);
-            if (isClicked(guiX - 7 + 67, guiY - 16 + 124, 85, 17)) {
-                mc.displayGuiScreen(null);
-                isWon = false;
-                isClicked = false;
+    
+    public GuiCaseView(final int caseid) {
+        this.rollMove = 0.0f;
+        this.counter = 0;
+        this.gridAnim = 0.0f;
+        this.animation = 0.0f;
+        this.mainAnimation = 25.0f;
+        this.fenceAnim = 0.0f;
+        this.numAnim = 0.0f;
+        this.model = new ModelGuiCase();
+        this.isWon = false;
+        this.ROLLING_ITEMS = null;
+        this.isCaseLoading = false;
+        this.caseLoadingRotation = 160.0f;
+        this.littleWaiting = 0.0f;
+        this.slow = PacketsDecoder.randFloat(9.38f, 9.42f);
+        this.randStop = 0;
+        this.current = 0;
+        this.lastInt = 0;
+        this.caseid = caseid;
+    }
+    
+    @Override
+    public void drawScreen(final int x, final int y, final float ticks) {
+        super.drawScreen(x, y, ticks);
+        this.drawDefaultBackground();
+        final ScaledResolution scaled = new ScaledResolution(this.mc);
+        final int factor = scaled.getScaleFactor();
+        final int guiX = this.width / 2 - 127;
+        final int guiY = this.height / 2 - 113;
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturecw.png"));
+        this.drawTexturedModalRect(guiX, guiY, 0, 0, 256, 72);
+        GlStateManager.color(1.0f, 1.0f, 1.0f, 0.6f);
+        this.drawTexturedModalRect(guiX, guiY, 0, 0, 256, 255);
+        GlStateManager.disableBlend();
+        GlStateManager.popMatrix();
+        this.drawScaledString(Strings.itemsCanDrop, (float)(guiX + 12), (float)(guiY + 63), 0.85f, TextPosition.LEFT);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+        if (!Recieve.isRolling) {
+            if (!this.isCaseLoading) {
+                if (!this.isHover(guiX + 65, guiY + 39, 125, 14)) {
+                    this.drawTexturedModalRect(guiX + 65, guiY + 39, 0, 214, 125, 14);
+                }
+                else {
+                    this.drawTexturedModalRect(guiX + 65, guiY + 39, 0, 228, 125, 14);
+                }
+                if (this.isClicked(guiX + 65, guiY + 39, 125, 14)) {
+                    this.isCaseLoading = true;
+                    this.mc.player.sendChatMessage("/rollcase " + this.caseid);
+                    this.randStop = PacketsDecoder.randInt(12, 21);
+                    this.isClicked = false;
+                }
+                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.caseid, 160.0f);
+                int price = 1000;
+                for (int i = 0; i < PacketsDecoder.getCases().size(); ++i) {
+                    if (i == this.caseid) {
+                        price = PacketsDecoder.getCases().get(i).getPrice();
+                    }
+                }
+                this.drawScaledString(Strings.openPrice(price), (float)(guiX + 128), (float)(guiY + 42), 0.92f, TextPosition.CENTER);
             }
-
-            drawScaledString(Strings.continueOK, guiX - 5 + 67 + 85 / 2, guiY - 11 + 124, 0.76F, TextPosition.CENTER);
+            else {
+                this.draw3DCase(guiX + 101, guiY + 13, "case" + this.caseid, this.caseLoadingRotation);
+                this.caseLoadingRotation += this.delta * 2.0f;
+                this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+                this.drawTexturedModalRect(guiX + 65, guiY + 39, 0, 242, 125, 14);
+                this.drawScaledString(Strings.opening, (float)(guiX + 81), (float)(guiY + 42), 0.92f, TextPosition.LEFT);
+            }
         }
-
-        //For test
-        if (animation >= 360) {
-            animation = 0;
+        else {
+            if (this.ROLLING_ITEMS == null) {
+                this.ROLLING_ITEMS = PacketsDecoder.getRandomItemsForRoll();
+            }
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+            this.drawTexturedModalRect(guiX + 65, guiY + 39, 0, 242, 125, 14);
+            this.drawScaledString(Strings.opening, (float)(guiX + 81), (float)(guiY + 42), 0.92f, TextPosition.LEFT);
+            this.drawRollingItems();
         }
-
-        if (mainAnimation <= 8) {
-            mainAnimation = 8;
+        this.drawItemsGrid(x, y, guiX + 8, guiY + 73);
+        if (this.isWon) {
+            GlStateManager.pushMatrix();
+            GlStateManager.translate(0.0f, 0.0f, 400.0f);
+            this.drawWonScreen(x, y, ticks);
+            GlStateManager.popMatrix();
         }
-
-        if (mainAnimation <= 15) {
-            fenceAnim = fenceAnim - delta / 90;
+    }
+    
+    public void onGuiClosed() {
+        Recieve.isRolling = false;
+    }
+    
+    private void drawRollingItems() {
+        final ScaledResolution scaled = new ScaledResolution(this.mc);
+        final int factor = scaled.getScaleFactor();
+        final int guiX = this.width / 2 - 127;
+        final int guiY = this.height / 2 - 113;
+        GlStateManager.pushMatrix();
+        GL11.glEnable(3089);
+        GL11.glScissor((guiX + 66) * factor, this.height * factor - (guiY + 7) * factor - 30 * factor, 123 * factor, 30 * factor);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+        for (int i = 0; i < this.ROLLING_ITEMS.size(); ++i) {
+            final Color cl = ColorHelper.getColorByRare(this.ROLLING_ITEMS.get(i).getRarity());
+            GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(770, 771);
+            GlStateManager.translate(guiX + this.rollMove + 66.0f + 40.0f * i, (float)(guiY + 8), 0.0f);
+            this.drawTexturedModalRect(0, 0, 127, 0, 38, 20);
+            final int poop = (int)(guiX + this.rollMove + 66.0f + 40.0f * i);
+            final int contact = guiX + 127;
+            if (contact >= poop && contact < 40 + poop) {
+                this.current = i;
+            }
+            if (this.lastInt != this.current) {
+                this.playSound("rolling");
+            }
+            this.lastInt = this.current;
+            GlStateManager.color(cl.getRed() / 255.0f, cl.getGreen() / 255.0f, cl.getBlue() / 255.0f, 1.0f);
+            this.drawTexturedModalRect(0, 20, 127, 20, 38, 8);
+            GlStateManager.disableBlend();
+            GlStateManager.color(1.0f, 1.0f, 1.0f);
+            GlStateManager.popMatrix();
+            final ItemStack is = this.ROLLING_ITEMS.get(i).getItemStack();
+            this.draw3DGuiItem(is, guiX + this.rollMove + 85.0f + 40.0f * i, (float)(guiY + 26), 30.0f);
+            GlStateManager.color(1.0f, 1.0f, 1.0f);
+            if (is.getDisplayName().length() > 12) {
+                this.drawScaledString(is.getDisplayName().substring(0, 11) + "...", guiX + this.rollMove + 67.0f + 40.0f * i, (float)(guiY + 29), 0.48f, TextPosition.LEFT);
+            }
+            else {
+                this.drawScaledString(is.getDisplayName(), guiX + this.rollMove + 67.0f + 40.0f * i, (float)(guiY + 29), 0.48f, TextPosition.LEFT);
+            }
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
         }
-
-        if (fenceAnim <= -0.9F) {
-            fenceAnim = -0.9F;
+        GL11.glDisable(3089);
+        GlStateManager.blendFunc(770, 771);
+        GlStateManager.enableBlend();
+        GlStateManager.translate(0.0f, 0.0f, 400.0f);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+        this.drawTexturedModalRect(guiX + 102, guiY + 7, 165, 0, 51, 30);
+        GlStateManager.popMatrix();
+        if (this.rollMove >= -((this.ROLLING_ITEMS.size() - 4) * 40) + this.randStop) {
+            this.rollMove -= this.delta * this.slow;
+            if (this.slow >= 0.05f) {
+                this.slow -= this.delta / 50.0f;
+            }
         }
-
-        if (fenceAnim <= -0.8) {
-            numAnim = numAnim + delta / 60;
+        else if (this.littleWaiting < 6.0f) {
+            this.littleWaiting += this.delta * this.slow;
         }
-
-        if (numAnim >= 0.3F) {
-            numAnim = 0.3F;
+        else {
+            this.itemStack = this.ROLLING_ITEMS.get(57).getItemStack().copy();
+            this.itemsCount = this.itemStack.getCount();
+            this.quality = this.ROLLING_ITEMS.get(57).getRarity();
+            this.isWon = true;
         }
-
-        //System.out.println(delta);
-
-        GL11.glPushMatrix();
-        ItemStack is = itemStack.copy();
-        is.setItemDamage(itemStack.getItemDamage());
-        is.stackSize = 1;
-        EntityItem entityItem = new EntityItem(mc.theWorld, 0D, 0D, 0D, is);
-        entityItem.hoverStart = 0.0F;
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor(guiX * factor, height * factor - guiY * factor - panY * factor, panX * factor, panY * factor);
-
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glDisable(GL11.GL_CULL_FACE);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CasesOpened.png"));
-        GL11.glTranslatef(width/2 + 7, height/2 - 113, 360);
-        GL11.glScalef(118, 118, 1);
-        GL11.glRotatef(270, 0F, 1F, 0F);
-        GL11.glRotatef(mainAnimation, 0F, 1F, 1F);
-        // -0.01F - -0.9F
-        // 0.01F - 0.3F
-
-        model.renderModel(0.0625F ,  fenceAnim, numAnim);
+    }
+    
+    private void drawItemsGrid(final int mouseX, final int mouseY, final int x, final int y) {
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 5; ++j) {
+                if (this.counter < (int)this.gridAnim) {
+                    this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+                    this.drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i, 82, 0, 45, 33);
+                    final Color cl = ColorHelper.getColorByRare(PacketsDecoder.getCaseItemsList().get(this.counter).getRarity());
+                    GlStateManager.pushMatrix();
+                    GlStateManager.enableBlend();
+                    GlStateManager.blendFunc(770, 771);
+                    this.drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i + 33, 82, 33, 45, 12);
+                    GlStateManager.color(cl.getRed() / 255.0f, cl.getGreen() / 255.0f, cl.getBlue() / 255.0f, 0.9f);
+                    this.drawTexturedModalRect(x + 3 + 47 * j, y + 2 + 48 * i + 33, 82, 33, 45, 12);
+                    GlStateManager.disableBlend();
+                    GlStateManager.color(1.0f, 1.0f, 1.0f);
+                    GlStateManager.popMatrix();
+                    final ItemStack is = PacketsDecoder.getCaseItemsList().get(this.counter).getItemStack();
+                    this.draw3DGuiItem(is, (float)(x + 25 + 47 * j), (float)(y + 29 + 48 * i), 38.0f);
+                    String name = is.getDisplayName();
+                    if (PacketsDecoder.getCaseItemsList().get(this.counter).getRarity() == 5) {
+                        name = "\u2726 " + name + " \u2726";
+                    }
+                    if (name.length() > 14) {
+                        this.drawScaledString(name.substring(0, 13) + "-", (float)(x + 5 + 47 * j), (float)(y + 36 + 48 * i), 0.5f, TextPosition.LEFT);
+                        if (name.length() > 27) {
+                            this.drawScaledString(name.substring(13, 26) + "...", (float)(x + 5 + 47 * j), (float)(y + 41 + 48 * i), 0.5f, TextPosition.LEFT);
+                        }
+                        else {
+                            this.drawScaledString(name.substring(13), (float)(x + 5 + 47 * j), (float)(y + 41 + 48 * i), 0.5f, TextPosition.LEFT);
+                        }
+                    }
+                    else {
+                        this.drawScaledString(name, (float)(x + 5 + 47 * j), (float)(y + 38 + 48 * i), 0.5f, TextPosition.LEFT);
+                    }
+                    ++this.counter;
+                }
+            }
+        }
+        if (this.gridAnim < PacketsDecoder.getCaseItemsList().size()) {
+            this.gridAnim += this.delta / 2.0f;
+        }
+        if (this.gridAnim > PacketsDecoder.getCaseItemsList().size()) {
+            this.gridAnim = (float)PacketsDecoder.getCaseItemsList().size();
+        }
+        this.counter = 0;
+    }
+    
+    private void drawWonScreen(final int x, final int y, final float ticks) {
+        this.drawDefaultBackground();
+        final ScaledResolution scaled = new ScaledResolution(this.mc);
+        final int factor = scaled.getScaleFactor();
+        final int panX = 205;
+        final int panY = 105;
+        final int guiX = this.width / 2 - panX / 2;
+        final int guiY = this.height / 2 - panY / 2;
+        final Color color = ColorHelper.getColorByRare(this.quality);
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/opctexture.png"));
+        this.drawTexturedModalRect(guiX - 7, guiY - 16, 0, 0, 219, 146);
+        GlStateManager.color(color.getRed() / 255.0f, color.getGreen() / 255.0f, color.getBlue() / 255.0f, 0.7f);
+        this.drawTexturedModalRect(guiX - 7, guiY - 16, 0, 0, 219, 16);
+        GlStateManager.color(1.0f, 1.0f, 1.0f);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/opctextureu.png"));
+        GlStateManager.popMatrix();
+        this.drawCenteredString(this.fontRenderer, this.itemStack.getDisplayName(), this.width / 2, guiY - 12, 16777215);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/opctexture.png"));
+        if (this.fenceAnim == -0.9f) {
+            if (!this.isHover(guiX - 7 + 67, guiY - 16 + 124, 85, 17)) {
+                this.drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 146, 85, 17);
+            }
+            else {
+                this.drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 164, 85, 17);
+            }
+            if (this.isClicked(guiX - 7 + 67, guiY - 16 + 124, 85, 17)) {
+                this.mc.displayGuiScreen((GuiScreen)null);
+                this.isWon = false;
+                this.isClicked = false;
+            }
+            this.drawScaledString(Strings.continueOK, (float)(guiX - 5 + 67 + 42), (float)(guiY - 11 + 124), 0.76f, TextPosition.CENTER);
+        }
+        if (this.animation >= 360.0f) {
+            this.animation = 0.0f;
+        }
+        if (this.mainAnimation <= 8.0f) {
+            this.mainAnimation = 8.0f;
+        }
+        if (this.mainAnimation <= 15.0f) {
+            this.fenceAnim -= this.delta / 90.0f;
+        }
+        if (this.fenceAnim <= -0.9f) {
+            this.fenceAnim = -0.9f;
+        }
+        if (this.fenceAnim <= -0.8) {
+            this.numAnim += this.delta / 60.0f;
+        }
+        if (this.numAnim >= 0.3f) {
+            this.numAnim = 0.3f;
+        }
+        GlStateManager.pushMatrix();
+        final ItemStack is = this.itemStack.copy();
+        is.setItemDamage(this.itemStack.getItemDamage());
+        is.setCount(1);
+        final EntityItem entityItem = new EntityItem((World)this.mc.world, 0.0, 0.0, 0.0, is);
+        entityItem.hoverStart = 0.0f;
+        GL11.glEnable(3089);
+        GL11.glScissor(guiX * factor, this.height * factor - guiY * factor - panY * factor, panX * factor, panY * factor);
+        GL11.glEnable(2929);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        GL11.glDisable(2884);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/casesopened.png"));
+        GlStateManager.translate((float)(this.width / 2 + 7), (float)(this.height / 2 - 113), 360.0f);
+        GlStateManager.scale(118.0f, 118.0f, 1.0f);
+        GlStateManager.rotate(270.0f, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(this.mainAnimation, 0.0f, 1.0f, 1.0f);
+        this.model.renderModel(0.0625f, this.fenceAnim, this.numAnim);
         RenderHelper.disableStandardItemLighting();
-        GL11.glTranslatef(-0.5F, 1.35F, 0);
-        GL11.glScalef(1.2F, 1.2F, 1.2F);
-        GL11.glRotatef(8, 0, 0, 1);
-        GL11.glRotatef(animation + 90, 0, 1, 0);
-        GL11.glRotatef(180, 1, 0, 0);
-        RenderManager.instance.renderEntityWithPosYaw(entityItem, 0, 0, 0, 0.2F, 0.2F);
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-        GL11.glPopMatrix();
-
-        if (numAnim >= 0.22) {
-            GL11.glPushMatrix();
-
-            if (itemsCount >= 10)
-                GL11.glTranslatef(width / 2 + 77, height / 2 - 37, 400); else
-                GL11.glTranslatef(width / 2 + 77 + 4.6F, height / 2 - 37, 400);
-
-            GL11.glScalef(1.5F, 1.5F, 1.5F);
-            fontRendererObj.drawString(EnumChatFormatting.DARK_GRAY + "" + itemsCount, 0, 0, 0xCC000000);
-            GL11.glPopMatrix();
+        GlStateManager.translate(-0.5f, 1.35f, 0.0f);
+        GlStateManager.scale(1.2f, 1.2f, 1.2f);
+        GlStateManager.rotate(8.0f, 0.0f, 0.0f, 1.0f);
+        GlStateManager.rotate(this.animation + 90.0f, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(180.0f, 1.0f, 0.0f, 0.0f);
+        Minecraft.getMinecraft().getRenderManager().renderEntity((Entity)entityItem, 0.0, 0.0, 0.0, 0.2f, 0.2f, false);
+        GL11.glDisable(3089);
+        GlStateManager.popMatrix();
+        if (this.numAnim >= 0.22) {
+            GlStateManager.pushMatrix();
+            if (this.itemsCount >= 10) {
+                GlStateManager.translate((float)(this.width / 2 + 77), (float)(this.height / 2 - 37), 400.0f);
+            }
+            else {
+                GlStateManager.translate(this.width / 2 + 77 + 4.6f, (float)(this.height / 2 - 37), 400.0f);
+            }
+            GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            this.fontRenderer.drawString(ChatFormatting.DARK_GRAY + "" + this.itemsCount, 0, 0, -872415232);
+            GlStateManager.popMatrix();
         }
-
-        if (mainAnimation <= 8) {
-            animation = animation + delta;
-        } else {
-            mainAnimation += - delta / 6;
+        if (this.mainAnimation <= 8.0f) {
+            this.animation += this.delta;
+        }
+        else {
+            this.mainAnimation += -this.delta / 6.0f;
         }
     }
 }

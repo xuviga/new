@@ -1,129 +1,107 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.gui;
 
-import com.mayakplay.cscase.Refs;
-import com.mayakplay.cscase.Strings;
-import com.mayakplay.cscase.model.ModelItemCase;
-import com.mayakplay.cscase.network.PacketsDecoder;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.fml.relauncher.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.*;
+import net.minecraft.util.*;
+import com.mayakplay.cscase.network.*;
+import net.minecraft.client.renderer.*;
+import org.lwjgl.opengl.*;
+import com.mayakplay.cscase.pojo.*;
+import com.mayakplay.cscase.*;
+import org.lwjgl.input.*;
+import java.io.*;
 
-
-/**
- * Created by Константин on 07.01.2016.
- */
-public class GuiCasesShop extends MPGui {
-
-    int move = 0;
-    int maxMove = 0;
+@SideOnly(Side.CLIENT)
+public class GuiCasesShop extends MPGui
+{
+    int move;
+    int maxMove;
+    
+    public GuiCasesShop() {
+        this.move = 0;
+        this.maxMove = 0;
+    }
+    
     @Override
-    public void drawScreen(int x, int y, float ticks) {
+    public void drawScreen(final int x, final int y, final float ticks) {
         super.drawScreen(x, y, ticks);
-
-        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int factor = scaled.getScaleFactor();
-
-        int guiX = width / 2 - 255 / 2;
-        int guiY = height / 2 - 226 / 2;
-
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTexture.png"));
-        drawTexturedModalRect(guiX, guiY, 0, 0, 256, 255);
-
-
-
-        int itemsCount = PacketsDecoder.getCases().size();
-        int colsCount = 3;
-        int rowsCount = Math.round(((float)  itemsCount / colsCount) + 0.2F);
-
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor((guiX) * factor, height * factor - (guiY - 2) * factor - 220 * factor, 247 * factor, 209 * factor);
-        maxMove = rowsCount * 80 - 208;
-
-        if (move >= 0) {
-            move = 0;
+        final ScaledResolution scaled = new ScaledResolution(this.mc);
+        final int factor = scaled.getScaleFactor();
+        final int guiX = this.width / 2 - 127;
+        final int guiY = this.height / 2 - 113;
+        Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexture.png"));
+        this.drawTexturedModalRect(guiX, guiY, 0, 0, 256, 255);
+        final int itemsCount = PacketsDecoder.getCases().size();
+        final int colsCount = 3;
+        final int rowsCount = Math.round(itemsCount / (float)colsCount + 0.2f);
+        GlStateManager.pushMatrix();
+        GL11.glEnable(3089);
+        GL11.glScissor(guiX * factor, this.height * factor - (guiY - 2) * factor - 220 * factor, 247 * factor, 209 * factor);
+        this.maxMove = rowsCount * 80 - 208;
+        if (this.move >= 0) {
+            this.move = 0;
         }
-
         if (rowsCount > 3) {
-            if (move <= -maxMove) {
-                move = -maxMove;
+            if (this.move <= -this.maxMove) {
+                this.move = -this.maxMove;
             }
-        } else {
-            move = 0;
         }
-
+        else {
+            this.move = 0;
+        }
         int counter = 0;
-        for (int i = 0; i < rowsCount; i++) {
-            for (int j = 0; j < colsCount; j++) {
+        for (int i = 0; i < rowsCount; ++i) {
+            for (int j = 0; j < colsCount; ++j) {
                 if (counter < itemsCount) {
-
-                    //ТУТ РЕНДЕР, ЭТО НЕ ВАЖНО
-                    mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-                    drawTexturedModalRect(guiX + 10 + j * 78, guiY + 10 + 80 * i + move, 0, 0, 76, 78);
-
-                    if (!isHover(guiX + 11 + j * 78, guiY + 73 + 80 * i + move, 74, 14))
-                        drawTexturedModalRect(guiX + 11 + j * 78, guiY + 73 + 80 * i + move, 0, 78, 74, 14);
-                    else
-                        drawTexturedModalRect(guiX + 11 + j * 78, guiY + 73 + 80 * i + move, 0, 92, 74, 14);
-
-                    if (isClicked(guiX + 11 + j * 78, guiY + 73 + 80 * i + move, 74, 14)) {
-                        mc.thePlayer.sendChatMessage("/mpcaseview "+counter);
-                        isClicked = false;
+                    this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+                    this.drawTexturedModalRect(guiX + 10 + j * 78, guiY + 10 + 80 * i + this.move, 0, 0, 76, 78);
+                    if (!this.isHover(guiX + 11 + j * 78, guiY + 73 + 80 * i + this.move, 74, 14)) {
+                        this.drawTexturedModalRect(guiX + 11 + j * 78, guiY + 73 + 80 * i + this.move, 0, 78, 74, 14);
                     }
-
-                    drawScaledString(PacketsDecoder.getCases().get(counter).getName(), guiX + 12 + j * 78, guiY + 14 + 80 * i + move, 0.85F, TextPosition.LEFT);
-                    drawScaledString(Strings.price + PacketsDecoder.getCases().get(counter).getPrice(), guiX + 12 + j * 78, guiY + 63 + 80 * i + move, 0.85F, TextPosition.LEFT);
-                    drawScaledString(Strings.view, guiX + 47 + j * 78, guiY + 76 + 80 * i + move, 0.8F, TextPosition.CENTER);
-
-                    draw3DCase(guiX + 21 + j * 78, guiY + 32 + 80 * i + move, "case"+counter, 160);
-
-                    counter++;
+                    else {
+                        this.drawTexturedModalRect(guiX + 11 + j * 78, guiY + 73 + 80 * i + this.move, 0, 92, 74, 14);
+                    }
+                    if (this.isClicked(guiX + 11 + j * 78, guiY + 73 + 80 * i + this.move, 74, 14)) {
+                        this.mc.player.sendChatMessage("/mpcaseview " + counter);
+                        this.isClicked = false;
+                    }
+                    this.drawScaledString(PacketsDecoder.getCases().get(counter).getName(), (float)(guiX + 12 + j * 78), (float)(guiY + 14 + 80 * i + this.move), 0.85f, TextPosition.LEFT);
+                    this.drawScaledString(Strings.price + PacketsDecoder.getCases().get(counter).getPrice(), (float)(guiX + 12 + j * 78), (float)(guiY + 63 + 80 * i + this.move), 0.85f, TextPosition.LEFT);
+                    this.drawScaledString(Strings.view, (float)(guiX + 47 + j * 78), (float)(guiY + 76 + 80 * i + this.move), 0.8f, TextPosition.CENTER);
+                    this.draw3DCase(guiX + 21 + j * 78, guiY + 32 + 80 * i + this.move, "case" + counter, 160.0f);
+                    ++counter;
                 }
             }
         }
-
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-        GL11.glPopMatrix();
-
-        ///slider
+        GL11.glDisable(3089);
+        GlStateManager.popMatrix();
         if (rowsCount > 3) {
-            mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CaseShopTextureL.png"));
-            drawTexturedModalRect(357, 27, 79, 0, 3, 210);
-            drawTexturedModalRect(357, (int) (27 - move * (190.0F / maxMove)), 76, 0, 3, 20);
-
-            //y - 27
-            //
-
-            float gnomik = 190 / maxMove;
-
-            if (isClicked(357, 27, 3, 210)) {
-                isClicked = false;
-                move = -((int) ((y - 27) / gnomik));
+            this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/caseshoptexturel.png"));
+            this.drawTexturedModalRect(357, 27, 79, 0, 3, 210);
+            this.drawTexturedModalRect(357, (int)(27.0f - this.move * (190.0f / this.maxMove)), 76, 0, 3, 20);
+            final float gnomik = (float)(190 / this.maxMove);
+            if (this.isClicked(357, 27, 3, 210)) {
+                this.isClicked = false;
+                this.move = -(int)((y - 27) / gnomik);
             }
         }
-        //debug
     }
-
-    @Override
-    protected void mouseClickMove(int x, int y, int b, long l) {
-    }
-
-    @Override
-    protected void mouseMovedOrUp(int x, int y, int b) {
-    }
-
-    @Override
-    public void handleMouseInput() {
+    
+    public void handleMouseInput() throws IOException {
         super.handleMouseInput();
-        move += Mouse.getEventDWheel() / 120 * 4;
+        this.move += Mouse.getEventDWheel() / 120 * 4;
     }
-
+    
     @Override
     public void initGui() {
-        for (int i = 0; i < PacketsDecoder.getCases().size(); i++) {
-            String t = PacketsDecoder.getCases().get(i).getTexture();
-            addTex("case"+i, t);
+        for (int i = 0; i < PacketsDecoder.getCases().size(); ++i) {
+            final String t = PacketsDecoder.getCases().get(i).getTexture();
+            this.addTex("case" + i, t);
         }
     }
 }

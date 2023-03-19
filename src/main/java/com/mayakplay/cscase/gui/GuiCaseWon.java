@@ -1,179 +1,165 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.gui;
 
-import com.mayakplay.cscase.Refs;
-import com.mayakplay.cscase.model.ModelGuiCase;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.entity.RenderItem;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-
+import net.minecraftforge.fml.relauncher.*;
+import com.mayakplay.cscase.model.*;
+import net.minecraft.item.*;
 import java.awt.*;
+import net.minecraft.util.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.entity.item.*;
+import net.minecraft.world.*;
+import org.lwjgl.opengl.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.*;
+import net.minecraft.entity.*;
+import net.minecraft.util.text.*;
 
-
-/**
- * Created by Константин on 03.01.2016.
- */
-public class GuiCaseWon extends MPGui {
-
-    float animation = 0;
-    float mainAnimation = 25;
-    float fenceAnim = 0;
-
-    float numAnim = 0;
-
-    ModelGuiCase model = new ModelGuiCase();
-    RenderItem renderItem = new RenderItem();
-
-    private int itemsCount;
-    private ItemStack itemStack;
-    private int quality;
-
-    public GuiCaseWon(ItemStack itemStack, int quality) {
+@SideOnly(Side.CLIENT)
+public class GuiCaseWon extends MPGui
+{
+    float animation;
+    float mainAnimation;
+    float fenceAnim;
+    float numAnim;
+    ModelGuiCase model;
+    private final int itemsCount;
+    private final ItemStack itemStack;
+    private final int quality;
+    
+    public GuiCaseWon(final ItemStack itemStack, final int quality) {
+        this.animation = 0.0f;
+        this.mainAnimation = 25.0f;
+        this.fenceAnim = 0.0f;
+        this.numAnim = 0.0f;
+        this.model = new ModelGuiCase();
         this.quality = quality;
-        this.itemsCount = itemStack.stackSize;
+        this.itemsCount = itemStack.getCount();
         this.itemStack = new ItemStack(itemStack.getItem(), 1);
     }
-
+    
     @Override
-    public void drawScreen(int x, int y, float ticks) {
-        super.drawScreen(x,y,ticks);
-        drawDefaultBackground();
-
-        ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-        int factor = scaled.getScaleFactor();
-        int panX = 205;
-        int panY = 105;
-
-        int guiX = width / 2 - panX / 2;
-        int guiY = height / 2 - panY / 2;
-
+    public void drawScreen(final int x, final int y, final float ticks) {
+        super.drawScreen(x, y, ticks);
+        this.drawDefaultBackground();
+        final ScaledResolution scaled = new ScaledResolution(this.mc);
+        final int factor = scaled.getScaleFactor();
+        final int panX = 205;
+        final int panY = 105;
+        final int guiX = this.width / 2 - panX / 2;
+        final int guiY = this.height / 2 - panY / 2;
         Color color = Color.white;
-        switch (quality) {
-            case 1:
+        switch (this.quality) {
+            case 1: {
                 color = Color.WHITE;
-            break;
-            case 2:
+                break;
+            }
+            case 2: {
                 color = Color.GREEN;
                 break;
-            case 3:
+            }
+            case 3: {
                 color = Color.BLUE;
                 break;
-            case 4:
+            }
+            case 4: {
                 color = Color.MAGENTA;
                 break;
-            case 5:
+            }
+            case 5: {
                 color = Color.ORANGE;
                 break;
-            case 6:
+            }
+            case 6: {
                 color = Color.RED;
                 break;
+            }
         }
-
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTexture.png"));
-        drawTexturedModalRect(guiX - 7, guiY -16 ,0 ,0 ,219, 146);
-        GL11.glPushMatrix();
-        GL11.glEnable(GL11.GL_BLEND);
-        //GL11.glColor4f(color.getRed() / 255F,color.getGreen() / 255F,color.getBlue() / 255F, 0.28F);
-        //mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTextureU.png"));
-        //drawTexturedModalRect(guiX - 7, guiY -16 ,0 ,0 ,219, 146);
-        GL11.glPopMatrix();
-        GL11.glColor3f(1,1,1);
-
-        drawCenteredString(fontRendererObj, itemStack.getDisplayName() , width / 2, guiY - 12, 0xFFFFFF);
-
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/OpcTexture.png"));
-        if (fenceAnim == - 0.9F) {
-            if (!isHover(guiX - 7 + 67, guiY - 16 + 124, 85, 17))
-                drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 146, 85, 17);
-            else
-                drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 164, 85, 17);
-            if (isClicked(guiX - 7 + 67, guiY - 16 + 124, 85, 17))
-                mc.displayGuiScreen(null);
-
-            drawScaledString("Продолжить", guiX - 5 + 67 + 85 / 2, guiY - 11 + 124, 0.76F, TextPosition.CENTER);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/opctexture.png"));
+        this.drawTexturedModalRect(guiX - 7, guiY - 16, 0, 0, 219, 146);
+        GlStateManager.pushMatrix();
+        GlStateManager.enableBlend();
+        GlStateManager.popMatrix();
+        GlStateManager.color(1.0f, 1.0f, 1.0f);
+        this.drawCenteredString(this.fontRenderer, this.itemStack.getDisplayName(), this.width / 2, guiY - 12, 16777215);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/opctexture.png"));
+        if (this.fenceAnim == -0.9f) {
+            if (!this.isHover(guiX - 7 + 67, guiY - 16 + 124, 85, 17)) {
+                this.drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 146, 85, 17);
+            }
+            else {
+                this.drawTexturedModalRect(guiX - 7 + 67, guiY - 16 + 124, 0, 164, 85, 17);
+            }
+            if (this.isClicked(guiX - 7 + 67, guiY - 16 + 124, 85, 17)) {
+                this.mc.displayGuiScreen((GuiScreen)null);
+            }
+            this.drawScaledString("\u041f\u0440\u043e\u0434\u043e\u043b\u0436\u0438\u0442\u044c", (float)(guiX - 5 + 67 + 42), (float)(guiY - 11 + 124), 0.76f, TextPosition.CENTER);
         }
-
-        //For test
-        if (animation >= 360) {
-            animation = 0;
+        if (this.animation >= 360.0f) {
+            this.animation = 0.0f;
         }
-
-        if (mainAnimation <= 8) {
-            mainAnimation = 8;
+        if (this.mainAnimation <= 8.0f) {
+            this.mainAnimation = 8.0f;
         }
-
-        if (mainAnimation <= 15) {
-            fenceAnim = fenceAnim - delta / 90;
+        if (this.mainAnimation <= 15.0f) {
+            this.fenceAnim -= this.delta / 90.0f;
         }
-
-        if (fenceAnim <= -0.9F) {
-            fenceAnim = -0.9F;
+        if (this.fenceAnim <= -0.9f) {
+            this.fenceAnim = -0.9f;
         }
-
-        if (fenceAnim <= -0.8) {
-            numAnim = numAnim + delta / 60;
+        if (this.fenceAnim <= -0.8) {
+            this.numAnim += this.delta / 60.0f;
         }
-
-        if (numAnim >= 0.3F) {
-            numAnim = 0.3F;
+        if (this.numAnim >= 0.3f) {
+            this.numAnim = 0.3f;
         }
-
-        //System.out.println(delta);
-
-        GL11.glPushMatrix();
-        EntityItem entityItem = new EntityItem(mc.theWorld, 0D, 0D, 0D, itemStack);
-        entityItem.hoverStart = 0.0F;
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        GL11.glScissor(guiX * factor, height * factor - guiY * factor - panY * factor, panX * factor, panY * factor);
-
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glDisable(GL11.GL_CULL_FACE);
-        mc.renderEngine.bindTexture(new ResourceLocation(Refs.MOD_ID, "textures/gui/CasesOpened.png"));
-        GL11.glTranslatef(width/2 + 7, height/2 - 113, 360);
-        GL11.glScalef(118, 118, 1);
-        GL11.glRotatef(270, 0F, 1F, 0F);
-        GL11.glRotatef(mainAnimation, 0F, 1F, 1F);
-        // -0.01F - -0.9F
-        // 0.01F - 0.3F
-
-        model.renderModel(0.0625F ,  fenceAnim, numAnim);
+        GlStateManager.pushMatrix();
+        final EntityItem entityItem = new EntityItem((World)this.mc.world, 0.0, 0.0, 0.0, this.itemStack);
+        entityItem.hoverStart = 0.0f;
+        GL11.glEnable(3089);
+        GL11.glScissor(guiX * factor, this.height * factor - guiY * factor - panY * factor, panX * factor, panY * factor);
+        GL11.glEnable(2929);
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(770, 771);
+        GL11.glDisable(2884);
+        this.mc.getTextureManager().bindTexture(new ResourceLocation("teccs", "textures/gui/casesopened.png"));
+        GlStateManager.translate((float)(this.width / 2 + 7), (float)(this.height / 2 - 113), 360.0f);
+        GlStateManager.scale(118.0f, 118.0f, 1.0f);
+        GlStateManager.rotate(270.0f, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(this.mainAnimation, 0.0f, 1.0f, 1.0f);
+        this.model.renderModel(0.0625f, this.fenceAnim, this.numAnim);
         RenderHelper.disableStandardItemLighting();
-        GL11.glTranslatef(-0.5F, 1.35F, 0);
-        GL11.glScalef(1.2F, 1.2F, 1.2F);
-        GL11.glRotatef(8, 0, 0, 1);
-        GL11.glRotatef(animation + 90, 0, 1, 0);
-        GL11.glRotatef(180, 1, 0, 0);
-        RenderManager.instance.renderEntityWithPosYaw(entityItem, 0, 0, 0, 0.2F, 0.2F);
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
-        GL11.glPopMatrix();
-
-        if (numAnim >= 0.22) {
-            GL11.glPushMatrix();
-
-            if (itemsCount >= 10)
-                GL11.glTranslatef(width / 2 + 77, height / 2 - 37, 400); else
-                GL11.glTranslatef(width / 2 + 77 + 4.6F, height / 2 - 37, 400);
-
-            GL11.glScalef(1.5F, 1.5F, 1.5F);
-            fontRendererObj.drawString(EnumChatFormatting.DARK_GRAY + "" + itemsCount, 0, 0, 0xCC000000);
-            GL11.glPopMatrix();
+        GlStateManager.translate(-0.5f, 1.35f, 0.0f);
+        GlStateManager.scale(1.2f, 1.2f, 1.2f);
+        GlStateManager.rotate(8.0f, 0.0f, 0.0f, 1.0f);
+        GlStateManager.rotate(this.animation + 90.0f, 0.0f, 1.0f, 0.0f);
+        GlStateManager.rotate(180.0f, 1.0f, 0.0f, 0.0f);
+        Minecraft.getMinecraft().getRenderManager().renderEntity((Entity)entityItem, 0.0, 0.0, 0.0, 0.2f, 0.2f, false);
+        GL11.glDisable(3089);
+        GlStateManager.popMatrix();
+        if (this.numAnim >= 0.22) {
+            GlStateManager.pushMatrix();
+            if (this.itemsCount >= 10) {
+                GlStateManager.translate((float)(this.width / 2 + 77), (float)(this.height / 2 - 37), 400.0f);
+            }
+            else {
+                GlStateManager.translate(this.width / 2 + 77 + 4.6f, (float)(this.height / 2 - 37), 400.0f);
+            }
+            GlStateManager.scale(1.5f, 1.5f, 1.5f);
+            this.fontRenderer.drawString(TextFormatting.DARK_GRAY + "" + this.itemsCount, 0, 0, -872415232);
+            GlStateManager.popMatrix();
         }
-
-        if (mainAnimation <= 8) {
-            animation = animation + delta;
-        } else {
-            mainAnimation += - delta / 6;
+        if (this.mainAnimation <= 8.0f) {
+            this.animation += this.delta;
+        }
+        else {
+            this.mainAnimation += -this.delta / 6.0f;
         }
     }
-
+    
     @Override
     public boolean doesGuiPauseGame() {
         return false;

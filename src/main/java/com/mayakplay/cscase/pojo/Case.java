@@ -1,32 +1,30 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.pojo;
 
-/**
- * Created by Константин on 07.01.2016.
- */
-public class Case {
-
-    private String name;
-    private int price;
-    private String texture;
-
-    public Case(String name, int price, String texture) {
+public class Case
+{
+    private final String name;
+    private final int price;
+    private final String texture;
+    
+    public Case(final String name, final int price, final String texture) {
         this.name = name;
         this.price = price;
         this.texture = texture;
     }
-
+    
     public String getName() {
-        return name;
+        return this.name;
     }
-
+    
     public int getPrice() {
-        return price;
+        return this.price;
     }
-
+    
     public String getTexture() {
-        return texture;
+        return this.texture;
     }
 }
-
-
-

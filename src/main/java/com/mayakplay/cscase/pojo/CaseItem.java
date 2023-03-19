@@ -1,26 +1,26 @@
+//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
+
+//Decompiled by Procyon!
+
 package com.mayakplay.cscase.pojo;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 
-/**
- * Created by Константин on 08.01.2016.
- */
-public class CaseItem {
-
-    private ItemStack item;
-    private int rarity;
-
-    public CaseItem(ItemStack item, int rarity) {
+public class CaseItem
+{
+    private final ItemStack item;
+    private final int rarity;
+    
+    public CaseItem(final ItemStack item, final int rarity) {
         this.item = item;
         this.rarity = rarity;
     }
-
+    
     public ItemStack getItemStack() {
-        return item;
+        return this.item;
     }
-
+    
     public int getRarity() {
-        return rarity;
+        return this.rarity;
     }
 }
