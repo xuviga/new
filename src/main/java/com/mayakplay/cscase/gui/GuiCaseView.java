@@ -1,9 +1,4 @@
-//Deobfuscated with https://github.com/SimplyProgrammer/Minecraft-Deobfuscator3000 using mappings "C:\Users\XuViGaN\Desktop\1.12 stable mappings"!
-
-//Decompiled by Procyon!
-
 package com.mayakplay.cscase.gui;
-
 import net.minecraftforge.fml.relauncher.*;
 import com.mayakplay.cscase.model.*;
 import java.util.*;
@@ -14,6 +9,8 @@ import com.mayakplay.cscase.pojo.*;
 import org.lwjgl.opengl.*;
 import com.mayakplay.cscase.*;
 import java.awt.*;
+import java.util.List;
+
 import net.minecraft.client.gui.*;
 import net.minecraft.entity.item.*;
 import net.minecraft.world.*;
