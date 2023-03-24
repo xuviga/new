@@ -1,0 +1,259 @@
+root@atlanta-craft:/home/hitech# GravitLauncher (fork sashok724's Launcher) ServerWrapper v5.3.6-1 stable (build #1)
+License for ServerWrapper GPLv3. SourceCode: https://github.com/GravitLauncher/Launcher
+2023.03.24 13:05:28 [INFO] ServerWrapper: LaunchServer address: ws://86.110.209.163:9274/api. Title: hitech
+2023.03.24 13:05:28 [INFO] Minecraft Version (for profile): 1.12.2
+2023.03.24 13:05:28 [INFO] Start Minecraft Server
+Loading libraries, please wait...
+13:05:29 [main/DEBUG]: Instantiating coremod class MovingWorldCoreMod
+13:05:29 [main/TRACE]: coremod named MovingWorldCore is loading
+13:05:29 [main/WARN ]: The coremod com.elytradev.movingworld.common.asm.coremod.MovingWorldCoreMod does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+13:05:29 [main/WARN ]: The coremod MovingWorldCore (com.elytradev.movingworld.common.asm.coremod.MovingWorldCoreMod) is not signed!
+13:05:29 [main/ERROR]: Mixin config mixins.movingworld.json does not specify "minVersion" property
+13:05:29 [main/DEBUG]: Enqueued coremod MovingWorldCore
+13:05:29 [main/DEBUG]: Instantiating coremod class CoreModPlugin
+13:05:29 [main/TRACE]: coremod named SuperMartijn642's Core Lib Plugin is loading
+13:05:29 [main/DEBUG]: The coremod com.supermartijn642.core.coremod.CoreModPlugin requested minecraft version 1.12.2 and minecraft is 1.12.2. It will be loaded.
+13:05:29 [main/WARN ]: The coremod SuperMartijn642's Core Lib Plugin (com.supermartijn642.core.coremod.CoreModPlugin) is not signed!
+13:05:29 [main/DEBUG]: Added access transformer class com/supermartijn642/core/coremod/CoreLibAccessTransformer to enqueued access transformers
+13:05:29 [main/DEBUG]: Enqueued coremod SuperMartijn642's Core Lib Plugin
+13:05:29 [main/DEBUG]: Instantiating coremod class FixItFMLLoadingPlugin
+13:05:29 [main/DEBUG]: The coremod ru.zaxar163.fixit.core.FixItFMLLoadingPlugin requested minecraft version 1.12.2 and minecraft is 1.12.2. It will be loaded.
+13:05:29 [main/WARN ]: The coremod FixItFMLLoadingPlugin (ru.zaxar163.fixit.core.FixItFMLLoadingPlugin) is not signed!
+13:05:29 [main/DEBUG]: Enqueued coremod FixItFMLLoadingPlugin
+13:05:29 [main/DEBUG]: Injecting coremod FMLCorePlugin \{net.minecraftforge.fml.relauncher.FMLCorePlugin\} class transformers
+13:05:29 [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.SideTransformer
+13:05:29 [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriptionTransformer
+13:05:29 [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.EventSubscriberTransformer
+13:05:29 [main/TRACE]: Registering transformer net.minecraftforge.fml.common.asm.transformers.SoundEngineFixTransformer
+13:05:29 [main/DEBUG]: Injection complete
+13:05:29 [main/DEBUG]: Running coremod plugin for FMLCorePlugin \{net.minecraftforge.fml.relauncher.FMLCorePlugin\}
+13:05:29 [main/DEBUG]: Running coremod plugin FMLCorePlugin
+13:05:31 [main/DEBUG]: Coremod plugin class FMLCorePlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod FMLForgePlugin \{net.minecraftforge.classloading.FMLForgePlugin\} class transformers
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for FMLForgePlugin \{net.minecraftforge.classloading.FMLForgePlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin FMLForgePlugin
+13:05:31 [main/DEBUG]: Coremod plugin class FMLForgePlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod CatCorePlugin \{catserver.server.CatCorePlugin\} class transformers
+13:05:31 [main/TRACE]: Registering transformer catserver.server.asm.MethodTransformer
+13:05:31 [main/TRACE]: Registering transformer catserver.server.asm.SideTransformer
+13:05:31 [main/TRACE]: Registering transformer catserver.server.asm.ModsCompatibleTransformer
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for CatCorePlugin \{catserver.server.CatCorePlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin CatCorePlugin
+13:05:31 [main/DEBUG]: Coremod plugin class CatCorePlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod EventHelperCoreMod \{com.gamerforea.eventhelper.coremod.CoreMod\} class transformers
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for EventHelperCoreMod \{com.gamerforea.eventhelper.coremod.CoreMod\}
+13:05:31 [main/DEBUG]: Running coremod plugin EventHelperCoreMod
+13:05:31 [main/DEBUG]: Coremod plugin class CoreMod run successfully
+13:05:31 [main/DEBUG]: Injecting coremod MicdoodlePlugin \{micdoodle8.mods.miccore.MicdoodlePlugin\} class transformers
+13:05:31 [main/TRACE]: Registering transformer micdoodle8.mods.miccore.MicdoodleTransformer
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for MicdoodlePlugin \{micdoodle8.mods.miccore.MicdoodlePlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin MicdoodlePlugin
+13:05:31 [main/DEBUG]: Coremod plugin class MicdoodlePlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod XaeroMinimapPlugin \{xaero.common.core.XaeroMinimapPlugin\} class transformers
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.ChunkTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.NetHandlerPlayClientTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.EntityPlayerTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.AbstractClientPlayerTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.WorldClientTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.EntityPlayerSPTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.PlayerListTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.SaveFormatTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.GuiIngameForgeTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.GuiBossOverlayTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.common.core.transformer.ModelRendererTransformer
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for XaeroMinimapPlugin \{xaero.common.core.XaeroMinimapPlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin XaeroMinimapPlugin
+13:05:31 [main/DEBUG]: Coremod plugin class XaeroMinimapPlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod XaeroWorldMapPlugin \{xaero.map.core.XaeroWorldMapPlugin\} class transformers
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.ChunkTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.NetHandlerPlayClientTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.EntityPlayerTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.AbstractClientPlayerTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.WorldClientTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.PlayerListTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.SaveFormatTransformer
+13:05:31 [main/TRACE]: Registering transformer xaero.map.core.transformer.BiomeColorHelperTransformer
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for XaeroWorldMapPlugin \{xaero.map.core.XaeroWorldMapPlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin XaeroWorldMapPlugin
+13:05:31 [main/DEBUG]: Coremod plugin class XaeroWorldMapPlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod MovingWorldCore \{com.elytradev.movingworld.common.asm.coremod.MovingWorldCoreMod\} class transformers
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for MovingWorldCore \{com.elytradev.movingworld.common.asm.coremod.MovingWorldCoreMod\}
+13:05:31 [main/DEBUG]: Running coremod plugin MovingWorldCore
+13:05:31 [main/DEBUG]: Coremod plugin class MovingWorldCoreMod run successfully
+13:05:31 [main/DEBUG]: Injecting coremod SuperMartijn642's Core Lib Plugin \{com.supermartijn642.core.coremod.CoreModPlugin\} class transformers
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for SuperMartijn642's Core Lib Plugin \{com.supermartijn642.core.coremod.CoreModPlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin SuperMartijn642's Core Lib Plugin
+13:05:31 [main/DEBUG]: Coremod plugin class CoreModPlugin run successfully
+13:05:31 [main/DEBUG]: Injecting coremod FixItFMLLoadingPlugin \{ru.zaxar163.fixit.core.FixItFMLLoadingPlugin\} class transformers
+13:05:31 [main/DEBUG]: Injection complete
+13:05:31 [main/DEBUG]: Running coremod plugin for FixItFMLLoadingPlugin \{ru.zaxar163.fixit.core.FixItFMLLoadingPlugin\}
+13:05:31 [main/DEBUG]: Running coremod plugin FixItFMLLoadingPlugin
+13:05:31 [main/DEBUG]: Coremod plugin class FixItFMLLoadingPlugin run successfully
+13:05:31 [main/DEBUG]: Validating minecraft
+
+
+13:05:33 [main/ERROR]: Potential problem: Galacticraft did not complete injection of bytecode into: pl (2 / 4)
+
+
+13:05:44 [Server thread/ERROR]: The mod appliedenergistics2 is expecting signature dfa4d3ac143316c6f32aa1a1beda1e34d42132e5 for source appliedenergistics2-rv6-stable-6.jar, however there is no signature matching that description
+13:05:44 [Server thread/ERROR]: The mod redstoneflux is expecting signature 8a6abf2cb9e141b866580d369ba6548732eff25f for source RedstoneFlux-1.12-2.1.1.1-universal.jar, however there is no signature matching that description
+13:05:47 [Server thread/ERROR]: > Error injecting proxy, PROXY
+13:05:47 [Server thread/ERROR]: The mod industrialupgrade is expecting signature ae2668515138eceb53d9e8c984322de3c34f9e21 for source IndustrialUpgrade-1.12.2-2.4.jar, however there is no signature matching that description
+13:05:47 [Server thread/ERROR]: Invalid fingerprint detected! The file IndustrialUpgrade-1.12.2-2.4.jar may have been tampered with. This version will NOT be supported by the author!
+13:05:47 [Server thread/ERROR]: The mod powerutils is expecting signature ae2668515138eceb53d9e8c984322de3c34f9e21 for source IndustrialUpgrade-1.12.2-2.4.jar, however there is no signature matching that description
+13:05:47 [Server thread/ERROR]: The mod quantum_generators is expecting signature ae2668515138eceb53d9e8c984322de3c34f9e21 for source IndustrialUpgrade-1.12.2-2.4.jar, however there is no signature matching that description
+13:05:47 [Server thread/ERROR]: The mod simplyquarries is expecting signature ae2668515138eceb53d9e8c984322de3c34f9e21 for source IndustrialUpgrade-1.12.2-2.4.jar, however there is no signature matching that description
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe harvestcraft:minecraft_pumpkinseeds
+com.google.gson.JsonSyntaxException: Unknown item 'harvestcraft:harvestpumpkinitem'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStackBasic(CraftingHelper.java:262) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$16(CraftingHelper.java:544) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getIngredient(CraftingHelper.java:204) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$15(CraftingHelper.java:531) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe harvestcraft:minecraft_pumpkinblocks
+com.google.gson.JsonSyntaxException: Unknown item 'harvestcraft:harvestpumpkinitem'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStackBasic(CraftingHelper.java:262) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$16(CraftingHelper.java:544) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getIngredient(CraftingHelper.java:204) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$15(CraftingHelper.java:531) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe harvestcraft:harvestpumpkinitem
+com.google.gson.JsonSyntaxException: Unknown item 'harvestcraft:harvestpumpkinitem'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStack(CraftingHelper.java:214) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$15(CraftingHelper.java:538) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe techguns:techguns_manual_alt
+com.google.gson.JsonSyntaxException: Unknown item 'patchouli:guide_book'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStack(CraftingHelper.java:214) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$15(CraftingHelper.java:538) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe techguns:techguns_manual
+com.google.gson.JsonSyntaxException: Unknown item 'patchouli:guide_book'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStack(CraftingHelper.java:214) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$init$15(CraftingHelper.java:538) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe techguns:shishkebap_alt
+com.google.gson.JsonSyntaxException: Unknown item 'techguns:shishkebap'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStack(CraftingHelper.java:214) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.oredict.ShapedOreRecipe.factory(ShapedOreRecipe.java:258) ~[ShapedOreRecipe.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:19 [Server thread/ERROR]: Parsing error loading recipe techguns:shishkebap
+com.google.gson.JsonSyntaxException: Unknown item 'techguns:shishkebap'
+        at net.minecraftforge.common.crafting.CraftingHelper.getItemStack(CraftingHelper.java:214) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.oredict.ShapedOreRecipe.factory(ShapedOreRecipe.java:258) ~[ShapedOreRecipe.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.getRecipe(CraftingHelper.java:416) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.lambda$loadRecipes$22(CraftingHelper.java:723) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:688) ~[CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at java.util.ArrayList.forEach(ArrayList.java:1259) [?:1.8.0_362]
+        at net.minecraftforge.common.crafting.CraftingHelper.loadRecipes(CraftingHelper.java:633) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.Loader.initializeMods(Loader.java:747) [Loader.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.server.FMLServerHandler.finishServerLoading(FMLServerHandler.java:107) [FMLServerHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.fml.common.FMLCommonHandler.onServerStarted(FMLCommonHandler.java:341) [FMLCommonHandler.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:278) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:21 [Server thread/ERROR]: Could not deserialize recipe from file: "example.energycell.json"
+13:06:21 [Server thread/ERROR]: Could not deserialize recipe from file: "example.zombieegg.json"
+13:06:24 [Server thread/ERROR]: Error discovering plugin for class snownee.jade.JadeClientPlugin: snownee.jade.JadeClientPlugin
+13:06:24 [Server thread/ERROR]: Error registering wrapped plugin from appliedenergistics2 at appeng.integration.modules.waila.WailaModule.register
+13:06:28 [Server thread/ERROR]: Parsing error loading built-in advancement galacticraftcore:galacticraft/oil
+com.google.gson.JsonSyntaxException: Expected item to be an item, was unknown string 'galacticraftcore:bucket_oil'
+        at net.minecraft.util.JsonUtils.func_188172_b(SourceFile:124) ~[rc.class:?]
+        at net.minecraft.util.JsonUtils.func_188180_i(SourceFile:135) ~[rc.class:?]
+        at net.minecraft.advancements.DisplayInfo.func_193221_a(DisplayInfo.java:133) ~[r.class:?]
+        at net.minecraft.advancements.DisplayInfo.func_192294_a(DisplayInfo.java:111) ~[r.class:?]
+        at net.minecraft.advancements.Advancement$Builder.func_192059_a(Advancement.java:237) ~[i$a.class:?]
+        at net.minecraft.advancements.AdvancementManager$1.deserialize(AdvancementManager.java:50) ~[ns$1.class:?]
+        at net.minecraft.advancements.AdvancementManager$1.deserialize(AdvancementManager.java:46) ~[ns$1.class:?]
+        at com.google.gson.internal.bind.TreeTypeAdapter.read(TreeTypeAdapter.java:76) ~[ServerWrapper.jar:?]
+        at net.minecraft.util.JsonUtils.func_188173_a(SourceFile:492) ~[rc.class:?]
+        at net.minecraft.util.JsonUtils.func_188176_a(SourceFile:517) ~[rc.class:?]
+        at net.minecraft.util.JsonUtils.func_188178_a(SourceFile:537) ~[rc.class:?]
+        at net.minecraftforge.common.ForgeHooks.lambda$loadAdvancements$0(ForgeHooks.java:1450) ~[ForgeHooks.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.crafting.CraftingHelper.findFiles(CraftingHelper.java:833) [CraftingHelper.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.ForgeHooks.loadAdvancements(ForgeHooks.java:1428) [ForgeHooks.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraftforge.common.ForgeHooks.loadAdvancements(ForgeHooks.java:1395) [ForgeHooks.class:git-CatServer-1.12.2-ab28211f]
+        at net.minecraft.advancements.AdvancementManager.func_192779_a(AdvancementManager.java:69) [ns.class:?]
+        at net.minecraft.advancements.AdvancementManager.<init>(AdvancementManager.java:60) [ns.class:?]
+        at net.minecraft.world.WorldServer.func_175643_b(WorldServer.java:217) [oo.class:?]
+        at net.minecraft.server.MinecraftServer.func_71247_a(MinecraftServer.java:350) [MinecraftServer.class:?]
+        at net.minecraft.server.dedicated.DedicatedServer.func_71197_b(DedicatedServer.java:330) [nz.class:?]
+        at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:636) [MinecraftServer.class:?]
+        at java.lang.Thread.run(Thread.java:750) [?:1.8.0_362]
+13:06:28 [Server thread/ERROR]: Couldn't load advancement galacticraftcore:galacticraft/refinery: Task Advancement{parentId=galacticraftcore:galacticraft/oil, display=net.minecraft.advancements.DisplayInfo@669ea5de, rewards=AdvancementRewards{experience=0, loot=[], recipes=[], function=null}, criteria={refinery=net.minecraft.advancements.Criterion@67fc39f9}, requirements=[[refinery]]}
+13:06:28 [Server thread/ERROR]: Couldn't load advancement galacticraftcore:galacticraft/rocket_fuel: Task Advancement{parentId=galacticraftcore:galacticraft/refinery, display=net.minecraft.advancements.DisplayInfo@5472f3f, rewards=AdvancementRewards{experience=0, loot=[], recipes=[], function=null}, criteria={fuel_bucket=net.minecraft.advancements.Criterion@3f2ed9f}, requirements=[[fuel_bucket]]}
